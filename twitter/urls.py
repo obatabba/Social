@@ -1,6 +1,6 @@
 from django.urls import path
 from django.contrib.auth import views as auth_views
-from musker import views
+from twitter import views
 
 
 urlpatterns = [

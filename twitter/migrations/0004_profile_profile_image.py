@@ -6,7 +6,7 @@ from django.db import migrations, models
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('musker', '0003_meep'),
+        ('twitter', '0003_meep'),
     ]
 
     operations = [

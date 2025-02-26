@@ -7,7 +7,7 @@ from django.db import migrations, models
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('musker', '0005_alter_profile_profile_image'),
+        ('twitter', '0005_alter_profile_profile_image'),
         migrations.swappable_dependency(settings.AUTH_USER_MODEL),
     ]
 

@@ -8,7 +8,7 @@ from django.db import migrations, models
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('musker', '0002_profile_date_modified'),
+        ('twitter', '0002_profile_date_modified'),
         migrations.swappable_dependency(settings.AUTH_USER_MODEL),
     ]
 
