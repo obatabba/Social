@@ -1,0 +1,68 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block content %}
+
+<div class="container">
+  <div class="row">
+    <div class="col-6 offset-1">
+      <h2>Your Profile</h2><br>
+
+      {% if messages %}
+      {% for message in messages %}
+      <div class="alert alert-primary alert-dismissible fade show" role="alert">
+        {{ message }}
+        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+      </div>
+      {% endfor %}
+      {% endif %}
+
+      <form method="post" enctype="multipart/form-data">
+        {% csrf_token %}
+        <div class="mb-3">
+          <label class="form-label">Username</label>
+          <input type="text" class="form-control" name="username" value="{{ user.username }}" placeholder="Required" />
+
+          {% if form.username.errors %}
+          <span class="text-danger">{{ form.username.errors.0 }}</span>
+          {% endif %}
+        </div>
+
+        <div class="mb-3">
+          <label class="form-label">Email</label>
+          <input type="email" class="form-control" name="email" value="{{ user.email }}" placeholder="Empty" />
+        </div>
+
+        <div class="mb-3">
+          <label class="form-label">First Name</label>
+          <input type="text" class="form-control" name="first_name" value="{{ user.first_name }}" placeholder="Empty" />
+        </div>
+
+        <div class="mb-3">
+          <label class="form-label">Last Name</label>
+          <input type="text" class="form-control" name="last_name" value="{{ user.last_name }}" placeholder="Empty" />
+        </div><br>
+
+        <div class="d-grid gap-2 col-4 mx-auto">
+          <button class="btn btn-dark" type="submit">Save</button>
+        </div>
+      </div>
+
+        <div class="col-4 offset-1"><br><br>
+          <div class="image-container text-center">
+            <img src="{{ user.profile.profile_image.url }}" class="rounded-circle image">
+            
+            <input type="file" name="profile_image" id="picture-input" hidden>
+
+              <label for="picture-input">Edit Picture
+                <img src="{% static 'images/edit_icon.png' %}" alt="edit" width="15%">
+              </label>
+
+          </div>
+        </div>
+
+      </form>
+
+  </div>
+</div>
+
+{% endblock %}

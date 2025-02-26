@@ -1,0 +1,94 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block content%}
+
+<div class="container">
+    <div class="row">
+        <div class="col-8 offset-1">
+            <h1 class="text-center">Meeps!</h1>
+            
+            <div class="sticky-top" style="top: 1em;" id="message-container">
+                {% if messages %}
+                {% for message in messages %}
+                <div class="alert alert-primary alert-dismissible fade show col-md-8 offset-md-2 mt-3" role="alert">
+                    {{ message }}
+                    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                </div>
+                {% endfor %}
+                {% endif %}
+            </div>
+            <br><br>
+            
+            {% if meeps %}
+                {% for meep in meeps %}
+                    {% include 'meeps.html' %}
+                {% endfor %}
+            {% endif %}
+        </div>
+        
+        <!-- Meep form -->
+        <div class="col-3">
+            {% if form %}<br><br><br><br><br>
+            <form method="post" enctype="multipart/form-data">
+                {% csrf_token %}
+                
+                <textarea name="body" class="form-control mb-3" rows="8"  placeholder="Type your meep here!" required></textarea>
+
+                <input type="file" name="image" id="image" hidden>
+            
+                <div>
+                    <button type="submit" class="btn btn-primary">Meep</button>
+                    <label for="image" style="display:inline-block;
+                    vertical-align:middle;">
+                        <i class="bi bi-paperclip" style="font-size: xx-large; display:inline-block;
+                        vertical-align:middle;" title="Upload an image"></i>
+                    </label>
+                    <span id="imageUploaded"></span>
+                </div>
+
+            </form>
+            {% endif %}
+        </div>
+
+    </div>
+</div>
+
+{% include 'login_modal.html' %}
+{% include 'meep_delete_modal.html' %}
+{% include 'meep_edit_modal.html' %}
+
+{% endblock %}
+
+{% block scripts %}
+
+<script src="{% static 'js/meep-actions.js' %}"></script>
+<script>
+
+    csrf_token = "{{ csrf_token }}"
+
+    setTimeout(() => {
+        const alert = document.querySelector('.alert');
+        if (alert) {
+            $(alert).fadeOut(500, function() {
+                $(alert).remove();
+            });
+        }
+    }, 5000); // 5 seconds
+
+
+    function closeModal(modalId) {
+        // Hide the modal
+        document.getElementById(modalId).style.display = "none";
+    }
+
+    document.getElementById('image').onchange = function () {
+        document.getElementById('imageUploaded').innerHTML = `
+            <span style="display:inline-block;                              vertical-align:middle; font-weight: 500;">Uploaded
+            </span>
+            <i class="bi bi-check-circle" style="font-size: x-large; display: inline-block; vertical-align: middle; color: green;"></i>
+        `;
+    };
+
+</script>
+
+{% endblock scripts %}

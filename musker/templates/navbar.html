@@ -1,0 +1,54 @@
+{% load static %}
+<link href="{% static 'css/bootstrap.min.css' %}" rel="stylesheet">
+
+<nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+  <div class="container-fluid">
+    <a class="navbar-brand" href="{% url 'home' %}">Musker</a>
+    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent"
+      aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+        <li class="nav-item">
+          <a class="nav-link" href="{% url 'profile_list' %}">Profile List</a>
+        </li>
+        
+        {% if request.user.is_authenticated%}
+        <li class="nav-item">
+          <form action="{% url 'logout' %}" method="post">
+            {% csrf_token %}
+            <button class="nav-link">Logout</button>
+          </form>
+        </li>
+      </ul>
+      <ul class="navbar-nav ml-auto">
+        <li class="nav-link">
+          {{ user.username }}
+        </li>
+        <li class="nav-link navbar-brand" style="padding: 0;">
+          <a href="{% url 'profile' request.user.id %}" class="image-container">
+            <img src="{{ user.profile.profile_image.url }}" class="rounded-circle"
+            style="aspect-ratio: 1; object-fit: cover;" width="35px">
+          </a>
+        </li>
+      </ul>
+
+        {% else %}
+        
+        <li class="nav-item">
+          <a class="nav-link" href="{% url 'register' %}">Register</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="{% url 'login' %}">Login</a>
+        </li>
+      </ul>
+        {% endif %}
+
+      <!-- <form class="d-flex" role="search">
+        <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
+        <button class="btn btn-outline-success" type="submit">Search</button>
+      </form> -->
+    </div>
+  </div>
+</nav>

@@ -1,0 +1,12 @@
+
+<!-- Login Modal -->
+<div id="loginModal" class="modal" style="display: none;">
+    <div class="modal-content">
+        <span class="close-btn" onclick="closeModal('loginModal')">&times;</span>
+        <h2>You need to log in to like this post</h2>
+        <p>Please log in to continue.</p>
+        <a href="{% url 'login'  %}" class="btn btn-dark mb-2">Log in</a>
+        <a href="{% url 'register'  %}" class="btn btn-primary mb-2">Sign up</a>
+        <button class="btn btn-secondary" onclick="closeModal('loginModal')">Cancel</button>
+    </div>
+</div>
