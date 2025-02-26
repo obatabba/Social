@@ -1,7 +1,7 @@
 from django.contrib.auth.forms import UserCreationForm, UserChangeForm
 from django.contrib.auth.models import User
 from django import forms
-from .models import Meep, Profile
+from .models import Tweet, Profile
 
 
 class RegistrationForm(UserCreationForm):
@@ -32,18 +32,18 @@ class ProfilePicForm(forms.ModelForm):
         fields = ['profile_image']
 
 
-class MeepForm(forms.ModelForm):
+class TweetForm(forms.ModelForm):
     body = forms.CharField(
         required=True,
         label="",
         widget=forms.widgets.Textarea(
             attrs={
-                "placeholder": "Type your meep here!",
+                "placeholder": "Type your tweet here!",
                 "class": "form-control"
             }
         )
     )
 
     class Meta:
-        model = Meep
+        model = Tweet
         exclude = ['user', 'likes']

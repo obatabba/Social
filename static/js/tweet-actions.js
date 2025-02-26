@@ -1,8 +1,8 @@
 let csrf_token;
 
-function like(meep_id) {
+function like(tweet_id) {
     event.preventDefault()
-    const url = `/meep_like/${meep_id}/`
+    const url = `/tweet_like/${tweet_id}/`
     
     let like_button = `<i class="bi bi-hand-thumbs-up" style="float: right; margin: -3px 3px 0 0;"></i>`
 
@@ -11,16 +11,18 @@ function like(meep_id) {
     $.ajax({
         type: 'POST',
         url: url,
-        data: {
-                
-        },    
+        // data: {
+        // },
+        headers: {
+            'X-CSRFToken': csrf_token
+        },
         success: function (response) {
             if (response.action === 'like') {
-                document.getElementById(`like-btn${meep_id}`).innerHTML = unlike_button;
-                document.getElementById(`likes-count${meep_id}`).innerHTML = response.likes
+                document.getElementById(`like-btn${tweet_id}`).innerHTML = unlike_button;
+                document.getElementById(`likes-count${tweet_id}`).innerHTML = response.likes
             } else {
-                document.getElementById(`like-btn${meep_id}`).innerHTML = like_button;
-                document.getElementById(`likes-count${meep_id}`).innerHTML = response.likes
+                document.getElementById(`like-btn${tweet_id}`).innerHTML = like_button;
+                document.getElementById(`likes-count${tweet_id}`).innerHTML = response.likes
             }    
         },    
         error: function (xhr) {
@@ -33,16 +35,16 @@ function like(meep_id) {
 }
 
 
-document.getElementById("confirmDeleteBtn").addEventListener("click", deleteMeep);
+document.getElementById("confirmDeleteBtn").addEventListener("click", deleteTweet);
 
-function showDeleteModal(meepId) {
-    currentMeepId = meepId; // Store the ID for later use.
-    document.getElementById("meepDeleteModal").style.display = "block";
+function showDeleteModal(tweetId) {
+    currentTweetId = tweetId; // Store the ID for later use.
+    document.getElementById("tweetDeleteModal").style.display = "block";
 }
 
-function deleteMeep() {
+function deleteTweet() {
 
-    const deleteUrl = `/delete_meep/${currentMeepId}/`;
+    const deleteUrl = `/delete_tweet/${currentTweetId}/`;
 
     $.ajax({
         type: 'DELETE',
@@ -51,11 +53,11 @@ function deleteMeep() {
             'X-CSRFToken': csrf_token
         },
         success: function(response) {
-            // Hide meep delete modal
-            document.getElementById("meepDeleteModal").style.display = "none";
+            // Hide tweet delete modal
+            document.getElementById("tweetDeleteModal").style.display = "none";
 
-            // Add fade-out effect to the Meep
-            $(`#meep${currentMeepId}`).fadeOut(500, function() {
+            // Add fade-out effect to the tweet
+            $(`#tweet${currentTweetId}`).fadeOut(500, function() {
                 // Remove the element from DOM after the fade-out
                 $(this).remove();
             });
@@ -81,34 +83,34 @@ function deleteMeep() {
                 }
             }, 5000); // 5 seconds
 
-            currentMeepId = null;
+            currentTweetId = null;
         },
         error: function (xhr) {
-            console.error('Failed to delete the meep.');
+            console.error('Failed to delete the tweet.');
         } 
     })
 }
 
-function showEditModal(meepId) {
+function showEditModal(tweetId) {
 
     // Display the modal
-    document.getElementById("meepEditModal").style.display = "block";
-    document.getElementById("meepEditModal").setAttribute('data-meepId', meepId);
+    document.getElementById("tweetEditModal").style.display = "block";
+    document.getElementById("tweetEditModal").setAttribute('data-tweetId', tweetId);
 
-    const meepBody = document.getElementById(`meepBody${meepId}`).innerText;
-    document.getElementById("meepEditText").value = meepBody;
+    const tweetBody = document.getElementById(`tweetBody${tweetId}`).innerText;
+    document.getElementById("tweetEditText").value = tweetBody;
 }
 
-document.getElementById('meepEditForm').addEventListener('submit', function (event) {
+document.getElementById('tweetEditForm').addEventListener('submit', function (event) {
     event.preventDefault(); // Prevent the default form submission
 
-    const form = document.getElementById('meepEditForm');
+    const form = document.getElementById('tweetEditForm');
     const formData = new FormData(form); // Create FormData object from form
 
     formData.append('csrfmiddlewaretoken', csrf_token);
 
-    const meepId = document.getElementById('meepEditModal').getAttribute('data-meepId');
-    const url = `/edit_meep/${meepId}/`
+    const tweetId = document.getElementById('tweetEditModal').getAttribute('data-tweetId');
+    const url = `/edit_tweet/${tweetId}/`
 
     $.ajax({
         url: url,
@@ -118,8 +120,8 @@ document.getElementById('meepEditForm').addEventListener('submit', function (eve
         contentType: false, // Prevent jQuery from setting a content type
 
         success: function (response) {
-            document.getElementById("meepEditModal").style.display = "none";
-            document.getElementById(`meepBody${meepId}`).innerHTML = response['modified_meep']
+            document.getElementById("tweetEditModal").style.display = "none";
+            document.getElementById(`tweetBody${tweetId}`).innerHTML = response['modified_tweet']
                             
             // Show success message dynamically
             const messageContainer = document.getElementById('message-container');

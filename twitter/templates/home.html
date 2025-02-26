@@ -5,7 +5,7 @@
 <div class="container">
     <div class="row">
         <div class="col-8 offset-1">
-            <h1 class="text-center">Meeps!</h1>
+            <h1 class="text-center">Tweets</h1>
             
             <div class="sticky-top" style="top: 1em;" id="message-container">
                 {% if messages %}
@@ -19,25 +19,25 @@
             </div>
             <br><br>
             
-            {% if meeps %}
-                {% for meep in meeps %}
-                    {% include 'meeps.html' %}
+            {% if tweets %}
+                {% for tweet in tweets %}
+                    {% include 'tweets.html' %}
                 {% endfor %}
             {% endif %}
         </div>
         
-        <!-- Meep form -->
+        <!-- Tweet form -->
         <div class="col-3">
             {% if form %}<br><br><br><br><br>
             <form method="post" enctype="multipart/form-data">
                 {% csrf_token %}
                 
-                <textarea name="body" class="form-control mb-3" rows="8"  placeholder="Type your meep here!" required></textarea>
+                <textarea name="body" class="form-control mb-3" rows="8"  placeholder="Type your tweet here!" required></textarea>
 
                 <input type="file" name="image" id="image" hidden>
             
                 <div>
-                    <button type="submit" class="btn btn-primary">Meep</button>
+                    <button type="submit" class="btn btn-primary">Tweet</button>
                     <label for="image" style="display:inline-block;
                     vertical-align:middle;">
                         <i class="bi bi-paperclip" style="font-size: xx-large; display:inline-block;
@@ -54,14 +54,14 @@
 </div>
 
 {% include 'login_modal.html' %}
-{% include 'meep_delete_modal.html' %}
-{% include 'meep_edit_modal.html' %}
+{% include 'tweet_delete_modal.html' %}
+{% include 'tweet_edit_modal.html' %}
 
 {% endblock %}
 
 {% block scripts %}
 
-<script src="{% static 'js/meep-actions.js' %}"></script>
+<script src="{% static 'js/tweet-actions.js' %}"></script>
 <script>
 
     csrf_token = "{{ csrf_token }}"

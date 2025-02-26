@@ -13,7 +13,7 @@ class Migration(migrations.Migration):
 
     operations = [
         migrations.AddField(
-            model_name='meep',
+            model_name='tweet',
             name='likes',
             field=models.ManyToManyField(blank=True, related_name='likes', to=settings.AUTH_USER_MODEL),
         ),

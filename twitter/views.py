@@ -6,8 +6,8 @@ from django.contrib.auth import login
 from django.contrib import messages
 from django.http import HttpResponseForbidden, HttpResponseNotAllowed, JsonResponse
 
-from .models import Meep, Profile
-from .forms import MeepForm, ProfileEditForm, ProfilePicForm, RegistrationForm
+from .models import Tweet, Profile
+from .forms import TweetForm, ProfileEditForm, ProfilePicForm, RegistrationForm
 
 
 class CustomLogoutView(LogoutView):
@@ -31,27 +31,27 @@ def register(request):
     
 
 def home(request):
-    meeps = Meep.objects.all().order_by('-created_at')
+    tweets = Tweet.objects.all().order_by('-created_at')
     form = None
     if request.user.is_authenticated:
-        form = MeepForm()
+        form = TweetForm()
         
         if request.method == 'POST':
-            form = MeepForm(request.POST, request.FILES)
+            form = TweetForm(request.POST, request.FILES)
             if form.is_valid():
-                meep = form.save(commit=False)
-                meep.user = request.user
-                meep.save()
-                messages.success(request, 'Your meep has been posted!')
+                tweet = form.save(commit=False)
+                tweet.user = request.user
+                tweet.save()
+                messages.success(request, 'Your tweet has been posted!')
                 return redirect('home')
         
-    return render(request, 'home.html', {'meeps': meeps, 'form': form})
+    return render(request, 'home.html', {'tweets': tweets, 'form': form})
 
 
 @login_required()
 def profile(request, id):
     profile= get_object_or_404(Profile, user_id=id)
-    meeps = Meep.objects.filter(user_id=id).order_by("-created_at")
+    tweets = Tweet.objects.filter(user_id=id).order_by("-created_at")
 
     if request.method == 'POST':
         action = request.POST['action']
@@ -61,7 +61,7 @@ def profile(request, id):
             request.user.profile.follows.remove(profile)
         request.user.save()
 
-    return render(request, 'profile.html', {'profile': profile, 'meeps': meeps})
+    return render(request, 'profile.html', {'profile': profile, 'tweets': tweets})
 
 
 @login_required()
@@ -115,23 +115,23 @@ def profile_list(request):
     return render(request, 'profile_list.html', {'profiles': profiles})
 
 
-def meep_like(request, meep_id):
+def tweet_like(request, tweet_id):
     if not request.user.is_authenticated:
         return HttpResponseForbidden()
     
-    meep = get_object_or_404(Meep, id=meep_id)
+    tweet = get_object_or_404(Tweet, id=tweet_id)
 
     if request.method == 'POST':
-        if meep.likes.filter(id=request.user.id).exists():
-            meep.likes.remove(request.user)
+        if tweet.likes.filter(id=request.user.id).exists():
+            tweet.likes.remove(request.user)
             value = 'unlike'
         else:
-            meep.likes.add(request.user)
+            tweet.likes.add(request.user)
             value = 'like'
 
         data = {
             'action': value,
-            'likes': meep.likes_count()
+            'likes': tweet.likes_count()
         }
         return JsonResponse(data, safe=False)
     
@@ -139,29 +139,29 @@ def meep_like(request, meep_id):
 
 
 @login_required()
-def delete_meep(request, meep_id):
+def delete_tweet(request, tweet_id):
     if request.method == 'DELETE':
-        meep = get_object_or_404(Meep, id=meep_id)
-        if request.user == meep.user:
-            meep.delete()
-            return JsonResponse({'message': 'Meep deleted successfully.' }, status=200)
+        tweet = get_object_or_404(Tweet, id=tweet_id)
+        if request.user == tweet.user:
+            tweet.delete()
+            return JsonResponse({'message': 'Tweet deleted successfully.' }, status=200)
         else:
             return HttpResponseForbidden()
     return HttpResponseNotAllowed(['DELETE'])
 
 
 @login_required()
-def edit_meep(request, meep_id):
+def edit_tweet(request, tweet_id):
     if request.method == 'POST':
-        meep = get_object_or_404(Meep, id=meep_id)
-        if request.user == meep.user:
-            form = MeepForm(request.POST)
+        tweet = get_object_or_404(Tweet, id=tweet_id)
+        if request.user == tweet.user:
+            form = TweetForm(request.POST)
             if form.is_valid():
                 data = form.cleaned_data['body']
-                meep.body = data
-                meep.save()
+                tweet.body = data
+                tweet.save()
                 return JsonResponse(
-                    {'modified_meep': meep.body, 'message': 'Meep edited successfully.' })
+                    {'modified_tweet': tweet.body, 'message': 'Tweet edited successfully.' })
         else:
             return JsonResponse({'error': 'Not allowed.'}, status=403)
     return HttpResponseNotAllowed(['POST',])

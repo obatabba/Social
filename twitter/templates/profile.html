@@ -18,9 +18,9 @@
         {% endif %}
       </div>
 
-    {% if meeps %}
-      {% for meep in meeps %}
-          {% include 'meeps.html' %}
+    {% if tweets %}
+      {% for tweet in tweets %}
+          {% include 'tweets.html' %}
       {% endfor %}
     {% endif %}
     </div>
@@ -65,14 +65,14 @@
   </div>
 </div>
 
-{% include 'meep_delete_modal.html' %}
-{% include 'meep_edit_modal.html' %}
+{% include 'tweet_delete_modal.html' %}
+{% include 'tweet_edit_modal.html' %}
 
 {% endblock %}
 
 {% block scripts %}
 
-<script src="{% static 'js/meep-actions.js' %}"></script>
+<script src="{% static 'js/tweet-actions.js' %}"></script>
 <script>
 
     setTimeout(() => {

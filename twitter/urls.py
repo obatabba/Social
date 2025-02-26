@@ -13,7 +13,7 @@ urlpatterns = [
     path('logout/', views.CustomLogoutView.as_view(), name='logout'),
     path('register/', views.register, name='register'),
     path('edit_profile/', views.edit_profile, name='edit_profile'),
-    path('meep_like/<int:meep_id>/', views.meep_like, name='meep_like'),
-    path('delete_meep/<int:meep_id>/', views.delete_meep, name='delete_meep'),
-    path('edit_meep/<int:meep_id>/', views.edit_meep, name='edit_meep'),
+    path('tweet_like/<int:tweet_id>/', views.tweet_like, name='tweet_like'),
+    path('delete_tweet/<int:tweet_id>/', views.delete_tweet, name='delete_tweet'),
+    path('edit_tweet/<int:tweet_id>/', views.edit_tweet, name='edit_tweet'),
 ]

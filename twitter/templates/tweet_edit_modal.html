@@ -1,0 +1,13 @@
+
+<!-- Tweet Edit Form Modal -->
+<div id="tweetEditModal" class="modal" style="display: none;">
+    <div class="modal-content">
+        <span class="close-btn" onclick="closeModal('tweetEditModal')">&times;</span>
+        <h2>Edit tweet:</h2>
+        <form method="post" id="tweetEditForm">
+            {% csrf_token %}
+            <textarea class="form-control mb-2" name="body" id="tweetEditText"></textarea>
+            <button class="btn btn-primary mb-2" id="confirmEditBtn">Edit</button>
+        </form>
+    </div>
+</div>

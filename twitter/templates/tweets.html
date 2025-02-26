@@ -1,15 +1,15 @@
-<div class="main" id="meep{{meep.id}}">
+<div class="main" id="tweet{{tweet.id}}">
     <div style="padding:0 20px 0 20px;">
         <div class="dropstart text-end">
             <i class="bi bi-three-dots mb-2" type="button" data-bs-toggle="dropdown"></i>
             <ul class="dropdown-menu">
-                {% if meep.user == user %}
+                {% if tweet.user == user %}
                 <li>
-                    <a class="dropdown-item" onclick="return showDeleteModal('{{meep.id}}')">Delete meep <i
+                    <a class="dropdown-item" onclick="return showDeleteModal('{{tweet.id}}')">Delete tweet <i
                             class="bi bi-trash-fill"></i></a>
                 </li>
                 <li>
-                    <a class="dropdown-item" onclick="return showEditModal('{{meep.id}}')">Edit meep <i
+                    <a class="dropdown-item" onclick="return showEditModal('{{tweet.id}}')">Edit tweet <i
                             class="bi bi-pencil-fill"></i></a>
                 </li>
                 {% else %}
@@ -27,30 +27,30 @@
 
         <div class="post-head">
             <div class="author-img-container">
-                <a href="{% url 'profile' meep.user.id %}">
-                    <img class="author-img" src="{{ meep.user.profile.profile_image.url }}" />
+                <a href="{% url 'profile' tweet.user.id %}">
+                    <img class="author-img" src="{{ tweet.user.profile.profile_image.url }}" />
                 </a>
             </div>
             <div class="post-info">
-                <span class="author-name">{{ meep.user.username }}</span>
-                <span class="posted-at">{{ meep.created_at }}</span>
+                <span class="author-name">{{ tweet.user.username }}</span>
+                <span class="posted-at">{{ tweet.created_at }}</span>
             </div>
         </div>
     </div>
-    <span class="caption" id="meepBody{{meep.id}}">{{ meep.body }}</span>
-    <!-- <pre class="text" id="meepBody{{meep.id}}">{{ meep.body }}</pre> -->
-    {% if meep.image %}
-    <img class="post-image" src="{{ meep.image.url }}" />
+    <span class="caption" id="tweetBody{{tweet.id}}">{{ tweet.body }}</span>
+    <!-- <pre class="text" id="tweetBody{{tweet.id}}">{{ tweet.body }}</pre> -->
+    {% if tweet.image %}
+    <img class="post-image" src="{{ tweet.image.url }}" />
     {% endif %}
     <br>
 
     <div style="margin:0 15px 10px 0;">
-        <span style="float: right; margin-top: -3px;" id="likes-count{{ meep.id }}">
-            {{ meep.likes_count }}</span>
+        <span style="float: right; margin-top: -3px;" id="likes-count{{ tweet.id }}">
+            {{ tweet.likes_count }}</span>
 
-        <a href="" onclick="return like('{{meep.id}}')" id="like-btn{{ meep.id }}">
+        <a href="" onclick="return like('{{tweet.id}}')" id="like-btn{{ tweet.id }}">
 
-            {% if user not in meep.likes.all %}
+            {% if user not in tweet.likes.all %}
             <i class="bi bi-hand-thumbs-up" style="float: right; margin: -3px 3px 0 0;"></i>
             {% else %}
             <i class="bi bi-hand-thumbs-up-fill" style="float: right; margin: -3px 3px 0 0;"></i>

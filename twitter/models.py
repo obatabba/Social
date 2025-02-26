@@ -20,10 +20,10 @@ class Profile(models.Model):
         return self.user.username
     
 
-class Meep(models.Model):
+class Tweet(models.Model):
     user = models.ForeignKey(
         User,
-        related_name='meeps', 
+        related_name='tweets', 
         on_delete=models.CASCADE
     )
     body = models.CharField(max_length=200)
