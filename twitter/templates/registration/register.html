@@ -23,15 +23,15 @@
   
       <div class="mb-3">
         <input type="text" name="first_name" class="form-control" required placeholder="Enter your first name" value="{{ form.first_name.value|default:'' }}"/>
-        {% if form.first_name is None %}
-        <span class="text-danger">Please enter your first name.</span>
+        {% if form.first_name.errors %}
+            <span class="text-danger">{{ form.first_name.errors.0 }}</span>
         {% endif %}
       </div>
   
       <div class="mb-3">
         <input type="text" name="last_name" class="form-control" required placeholder="Enter your last name" value="{{ form.last_name.value|default:'' }}"/>
-        {% if form.last_name is None %}
-        <span class="text-danger">Please enter your last name.</span>
+        {% if form.last_name.errors %}
+            <span class="text-danger">{{ form.last_name.errors.0 }}</span>
         {% endif %}
       </div>
   
