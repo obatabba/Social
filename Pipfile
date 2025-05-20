@@ -6,6 +6,8 @@ name = "pypi"
 [packages]
 django = "*"
 pillow = "*"
+waitress = "*"
+whitenoise = {extras = ["brotli"], version = "*"}
 
 [dev-packages]
 
