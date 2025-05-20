@@ -1,3 +1,4 @@
+from django.templatetags.static import static
 from django.db import models
 from django.contrib.auth.models import User
 
@@ -13,8 +14,14 @@ class Profile(models.Model):
 
     date_modified = models.DateTimeField(User, auto_now=True)
     profile_image = models.ImageField(
-        null=True, blank=True, upload_to='profile_images/', default='profile_images/default.jpg'
+        null=True, blank=True, upload_to='profile_images/'
     )
+
+    @property
+    def profile_pic_url(self):
+        if self.profile_image:
+            return self.profile_image.url
+        return static('images/default_profile_pic.jpg')
     
     def __str__(self) -> str:
         return self.user.username
