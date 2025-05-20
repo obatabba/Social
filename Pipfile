@@ -8,6 +8,7 @@ django = "*"
 pillow = "*"
 waitress = "*"
 whitenoise = {extras = ["brotli"], version = "*"}
+dj-database-url = "*"
 
 [dev-packages]
 
