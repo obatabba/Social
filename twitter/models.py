@@ -21,7 +21,7 @@ class Profile(models.Model):
     def profile_pic_url(self):
         if self.profile_image:
             return self.profile_image.url
-        return static('images/default_profile_pic.jpg')
+        return static('twitter/images/default_profile_pic.jpg')
     
     def __str__(self) -> str:
         return self.user.username
