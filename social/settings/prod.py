@@ -2,7 +2,6 @@ import os
 import dj_database_url
 from .common import *
 
-# SECURITY WARNING: keep the secret key used in production secret!
 SECRET_KEY = os.environ['SECRET_KEY']
 
 DEBUG = False
@@ -13,6 +12,8 @@ CSRF_TRUSTED_ORIGINS = CSRF_ALLOWED_ORIGINS = CORS_ORIGINS_WHITELIST = [os.envir
 
 SECURE_PROXY_SSL_HEADER = ('HTTP_X_FORWARDED_PROTO', 'https')
 
+MEDIA_URL = '/media/'
+
 DATABASES = {
     'default': dj_database_url.parse(
         os.environ['DATABASE_URL'],
@@ -20,3 +21,18 @@ DATABASES = {
         conn_health_checks=True,
     )
 }
+
+STORAGES = {
+    "default": {
+        "BACKEND": "cloudinary_storage.storage.MediaCloudinaryStorage",
+    },
+    'staticfiles': {
+        'BACKEND': 'whitenoise.storage.CompressedManifestStaticFilesStorage',
+    },
+}
+
+# CLOUDINARY_STORAGE = {        # Either use these OR the CLOUDINARY_URL environment variable
+#     'CLOUD_NAME': 'your-cloud-name',
+#     'API_KEY': 'your-api-key',
+#     'API_SECRET': 'your-secret-key',
+# }
