@@ -29,24 +29,24 @@
         <!-- Tweet form -->
         <div class="col-3">
             {% if form %}<br><br><br><br><br>
-            <form method="post" enctype="multipart/form-data">
-                {% csrf_token %}
+            <div class="position-sticky bg-white p-3 shadow rounded" style="top: 3rem; z-index: 1020;">
+                <form method="post" enctype="multipart/form-data">
+                    {% csrf_token %}               
+                    <textarea name="body" class="form-control mb-3" rows="8"  placeholder="Type your tweet here!" required></textarea>
+
+                    <input type="file" name="image" id="image" hidden>
                 
-                <textarea name="body" class="form-control mb-3" rows="8"  placeholder="Type your tweet here!" required></textarea>
-
-                <input type="file" name="image" id="image" hidden>
-            
-                <div>
-                    <button type="submit" class="btn btn-primary">Tweet</button>
-                    <label for="image" style="display:inline-block;
-                    vertical-align:middle;">
-                        <i class="bi bi-paperclip" style="font-size: xx-large; display:inline-block;
-                        vertical-align:middle;" title="Upload an image"></i>
-                    </label>
-                    <span id="imageUploaded"></span>
-                </div>
-
-            </form>
+                    <div>
+                        <button type="submit" class="btn btn-primary">Tweet</button>
+                        <label for="image" style="display:inline-block;
+                        vertical-align:middle;">
+                            <i class="bi bi-paperclip" style="font-size: xx-large; display:inline-block;
+                            vertical-align:middle;" title="Upload an image"></i>
+                        </label>
+                        <span id="imageUploaded"></span>
+                    </div>
+                </form>
+            </div>
             {% endif %}
         </div>
 
