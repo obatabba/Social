@@ -2,7 +2,9 @@
 
 > This is a project that I've created while I was practicing django and learning about dynamic web pages and utilizing basic AJAX calls and HTMX.
 
-It is a basic social media platform, which allows users to:
+Deployed on Render: https://social-mhtn.onrender.com . Check it out!
+
+### My Twitter is a basic social media platform, which allows users to:
 - Create accounts and enter personal information.
 - Log in and out with username and password, with elegant forms and clear error messages.
 - Create posts, and attach images.
