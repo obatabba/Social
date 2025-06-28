@@ -33,7 +33,7 @@ class Tweet(models.Model):
         related_name='tweets', 
         on_delete=models.CASCADE
     )
-    body = models.CharField(max_length=200)
+    body = models.CharField(max_length=1000)
     image = models.ImageField(
         upload_to='uploaded_images/', null=True, blank=True
     )
